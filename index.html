@@ -18,9 +18,10 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  img{
+  img {
     width: 180px;
   }
+  
   /* Main edge-to-edge container */
   .app-view {
     width: 100%;
@@ -31,7 +32,6 @@
     flex-direction: column;
     position: relative;
     padding-bottom: 24px; 
-
   }
 
   /* Close Bar */
@@ -106,7 +106,7 @@
     width: 100%;
   }
 
-  /* Tri-color background matching the screenshot */
+  /* Tri-color background */
   .seg-1 { background: #B1A271; flex: 1; }
   .seg-2 { background: #3E9798; flex: 1; }
   .seg-3 { background: #45FB3B; flex: 1; }
@@ -118,7 +118,7 @@
     align-items: center;
   }
 
-  /* Animated Time Text with Drop Shadow */
+  /* Animated Time Text with Drop Shadow and Hardware Acceleration */
   .time-text {
     position: absolute;
     top: 50%;
@@ -127,24 +127,29 @@
     font-weight: 600;
     white-space: nowrap;
     
-    /* Heavy, multi-layered text shadow for maximum contrast */
     text-shadow: 
       0px 1px 4px rgba(0,0,0,0.8),
       0px 2px 8px rgba(0,0,0,0.9),
       0px 0px 2px rgba(0,0,0,1);
     
-    /* The Animation */
     animation: slideRight 1s ease-in-out infinite alternate;
+    
+    /* ANTI-BLUR FIXES */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0); /* initial kick to GPU */
   }
 
+  /* Updated to use translate3d */
   @keyframes slideRight {
     0% {
       left: 0;
-      transform: translate(0, -50%);
+      transform: translate3d(0, -50%, 0);
     }
     100% {
       left: 100%;
-      transform: translate(-100%, -50%);
+      transform: translate3d(-100%, -50%, 0);
     }
   }
 
@@ -239,34 +244,6 @@
     <div class="qr-area">
       <img src="qr1.jpg" id="qr-frame-1" />
       <img src="qr2.png" id="qr-frame-2"  style="display: none;" />
-      
-      <!--svg class="qr-svg" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg">
-        <rect width="45" height="45" fill="white"/>
-
-        <rect x="16" y="16" width="13" height="13" fill="black"/>
-        <rect x="18" y="18" width="9" height="9" fill="white"/>
-        <rect x="20" y="20" width="5" height="5" fill="black"/>
-        <rect x="22" y="22" width="1" height="1" fill="white"/>
-
-        
-        <g id="qr-frame-1" stroke="black" stroke-width="1">
-          <path d="M2.5,2.5 h40 M2.5,3.5 h40 M2.5,4.5 h40 M2.5,5.5 h40 M2.5,6.5 h40 M2.5,7.5 h40 M2.5,8.5 h40 M2.5,9.5 h40 M2.5,10.5 h40 M2.5,11.5 h40 M2.5,12.5 h40 M2.5,13.5 h40 M2.5,14.5 h40" 
-                stroke-dasharray="1,1,2,1,3,1,1,2,2,1,1,3,1,2,1,1,2,1,3,1,2"/>
-          <path d="M2.5,15.5 h12 M31.5,15.5 h11 M2.5,16.5 h12 M31.5,16.5 h11 M2.5,17.5 h12 M31.5,17.5 h11 M2.5,18.5 h12 M31.5,18.5 h11 M2.5,19.5 h12 M31.5,19.5 h11 M2.5,20.5 h12 M31.5,20.5 h11 M2.5,21.5 h12 M31.5,21.5 h11 M2.5,22.5 h12 M31.5,22.5 h11 M2.5,23.5 h12 M31.5,23.5 h11 M2.5,24.5 h12 M31.5,24.5 h11 M2.5,25.5 h12 M31.5,25.5 h11 M2.5,26.5 h12 M31.5,26.5 h11 M2.5,27.5 h12 M31.5,27.5 h11 M2.5,28.5 h12 M31.5,28.5 h11 M2.5,29.5 h12 M31.5,29.5 h11" 
-                stroke-dasharray="2,2,1,1,1,3,1,1"/>
-          <path d="M2.5,30.5 h40 M2.5,31.5 h40 M2.5,32.5 h40 M2.5,33.5 h40 M2.5,34.5 h40 M2.5,35.5 h40 M2.5,36.5 h40 M2.5,37.5 h40 M2.5,38.5 h40 M2.5,39.5 h40 M2.5,40.5 h40 M2.5,41.5 h40 M2.5,42.5 h40" 
-                stroke-dasharray="3,1,2,1,1,2,1,2,2,1,1,2,1,1,1,3,1,1,2,1,1"/>
-        </g>
-
-        <g id="qr-frame-2" stroke="black" stroke-width="1" style="display: none;">
-          <path d="M2.5,2.5 h40 M2.5,3.5 h40 M2.5,4.5 h40 M2.5,5.5 h40 M2.5,6.5 h40 M2.5,7.5 h40 M2.5,8.5 h40 M2.5,9.5 h40 M2.5,10.5 h40 M2.5,11.5 h40 M2.5,12.5 h40 M2.5,13.5 h40 M2.5,14.5 h40" 
-                stroke-dasharray="2,1,3,1,1,1,2,3,1,2,1,1,2,1,2,1,1,3,1,2,2"/>
-          <path d="M2.5,15.5 h12 M31.5,15.5 h11 M2.5,16.5 h12 M31.5,16.5 h11 M2.5,17.5 h12 M31.5,17.5 h11 M2.5,18.5 h12 M31.5,18.5 h11 M2.5,19.5 h12 M31.5,19.5 h11 M2.5,20.5 h12 M31.5,20.5 h11 M2.5,21.5 h12 M31.5,21.5 h11 M2.5,22.5 h12 M31.5,22.5 h11 M2.5,23.5 h12 M31.5,23.5 h11 M2.5,24.5 h12 M31.5,24.5 h11 M2.5,25.5 h12 M31.5,25.5 h11 M2.5,26.5 h12 M31.5,26.5 h11 M2.5,27.5 h12 M31.5,27.5 h11 M2.5,28.5 h12 M31.5,28.5 h11 M2.5,29.5 h12 M31.5,29.5 h11" 
-                stroke-dasharray="1,2,2,1,1,1,2,1,3"/>
-          <path d="M2.5,30.5 h40 M2.5,31.5 h40 M2.5,32.5 h40 M2.5,33.5 h40 M2.5,34.5 h40 M2.5,35.5 h40 M2.5,36.5 h40 M2.5,37.5 h40 M2.5,38.5 h40 M2.5,39.5 h40 M2.5,40.5 h40 M2.5,41.5 h40 M2.5,42.5 h40" 
-                stroke-dasharray="1,1,2,3,2,1,1,1,2,1,3,1,1,2,1,2,1,1,3,1,2"/>
-        </g>
-      </svg-->
     </div>
 
     <div class="details-wrapper">
@@ -310,7 +287,9 @@
         Details
       </div>
     </div>
-  </div> </div> <script>
+  </div> </div> 
+  
+  <script>
   // --- Script 1: Live System Time & Activated Time ---
   function updateLiveTime() {
     const timeElement = document.getElementById('live-time');
