@@ -18,10 +18,9 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  img {
+  img{
     width: 180px;
   }
-  
   /* Main edge-to-edge container */
   .app-view {
     width: 100%;
@@ -32,6 +31,7 @@
     flex-direction: column;
     position: relative;
     padding-bottom: 24px; 
+
   }
 
   /* Close Bar */
@@ -106,7 +106,7 @@
     width: 100%;
   }
 
-  /* Tri-color background */
+  /* Tri-color background matching the screenshot */
   .seg-1 { background: #B1A271; flex: 1; }
   .seg-2 { background: #3E9798; flex: 1; }
   .seg-3 { background: #45FB3B; flex: 1; }
@@ -118,10 +118,11 @@
     align-items: center;
   }
 
-  /* Animated Time Text with Drop Shadow and Hardware Acceleration */
+  /* Animated Time Text with Drop Shadow */
   .time-text {
     position: absolute;
-    top: 50%;
+    top: 0; /* Removed the 50% top */
+    line-height: 48px; /* Mathematically centers the text based on container height */
     color: #fff;
     font-size: 24px;
     font-weight: 600;
@@ -134,22 +135,22 @@
     
     animation: slideRight 2s ease-in-out infinite alternate;
     
-    /* ANTI-BLUR FIXES */
-    will-change: transform;
+    /* Hardware acceleration & anti-blur hints */
+    will-change: left, transform;
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
-    transform: translateZ(0); /* initial kick to GPU */
+    transform: translateZ(0);
   }
 
-  /* Updated to use translate3d */
+  /* Keyframes now only handle horizontal movement, eliminating sub-pixel vertical rendering */
   @keyframes slideRight {
     0% {
       left: 0;
-      transform: translate3d(0, -50%, 0);
+      transform: translate3d(0, 0, 0); 
     }
     100% {
       left: 100%;
-      transform: translate3d(-100%, -50%, 0);
+      transform: translate3d(-100%, 0, 0);
     }
   }
 
@@ -287,9 +288,7 @@
         Details
       </div>
     </div>
-  </div> </div> 
-  
-  <script>
+  </div> </div> <script>
   // --- Script 1: Live System Time & Activated Time ---
   function updateLiveTime() {
     const timeElement = document.getElementById('live-time');
